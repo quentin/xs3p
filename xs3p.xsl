@@ -4240,6 +4240,32 @@ pre {
                <xsl:with-param name="schemaLoc" select="$schemaLoc"/>
             </xsl:apply-templates>
          </xsl:when>
+         <!-- Alternative type is provided -->
+         <xsl:when test="$element/@name and $element/xsd:alternative">
+           <xsl:call-template name="PrintTypeRef">
+             <xsl:with-param name="ref" select="$element/xsd:alternative[position()=1]/@type"/>
+             <xsl:with-param name="schemaLoc" select="$schemaLoc"/>
+           </xsl:call-template>
+           <xsl:text> </xsl:text>
+           <span class="c">
+             <xsl:text>[[</xsl:text>
+             <xsl:value-of select="$element/xsd:alternative[position()=1]/@test"/>
+             <xsl:text>]]</xsl:text>
+           </span>
+           <xsl:for-each select="$element/xsd:alternative[position()>1]">
+             <xsl:text> | </xsl:text>
+             <xsl:call-template name="PrintTypeRef">
+               <xsl:with-param name="ref" select="@type"/>
+               <xsl:with-param name="schemaLoc" select="$schemaLoc"/>
+             </xsl:call-template>
+             <xsl:text> </xsl:text>
+             <span class="c">
+               <xsl:text>[[</xsl:text>
+               <xsl:value-of select="@test"/>
+               <xsl:text>]]</xsl:text>
+             </span>
+           </xsl:for-each>
+         </xsl:when>
          <xsl:otherwise>
             <xsl:text>...</xsl:text>
          </xsl:otherwise>
