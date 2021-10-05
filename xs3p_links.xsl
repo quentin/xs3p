@@ -17,13 +17,13 @@
    </xsl:template>
 
    <xsl:template match="xs:include | xs:import">
-      <schema>
-         <xsl:attribute name="file-location">
-            <xsl:value-of select="@schemaLocation"/>
-         </xsl:attribute>
-         <xsl:attribute name="docfile-location">
-            <xsl:value-of select="@schemaLocation"/>.html</xsl:attribute>
-      </schema>
+     <schema xmlns="http://titanium.dstc.edu.au/xml/xs3p">
+       <xsl:attribute name="file-location">
+         <xsl:value-of select="@schemaLocation"/>
+       </xsl:attribute>
+       <xsl:attribute name="docfile-location">
+         <xsl:value-of select="@schemaLocation"/>.html</xsl:attribute>
+     </schema>
       <xsl:if test="normalize-space(translate($recursive, 'TRUE', 'true'))='true'">
           <xsl:apply-templates select="document(@schemaLocation)/xs:schema/xs:include | document(@schemaLocation)/xs:schema/xs:import" />
       </xsl:if>
